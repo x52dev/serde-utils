@@ -1,0 +1,19 @@
+[package]
+name = "double-int"
+version = "0.1.0"
+description = "The double-int format represents an integer that can be stored in an IEEE 754 double-precision number without loss of precision"
+categories = ["encoding", "no-std", "no-std::no-alloc"]
+keywords = ["serde", "utilities", "serialization", "deserialization"]
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+serde = { version = "1", default-features = false }
+
+[dev-dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
