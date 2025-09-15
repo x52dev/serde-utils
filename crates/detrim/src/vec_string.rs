@@ -1,6 +1,6 @@
 use alloc::{borrow::ToOwned as _, string::String, vec::Vec};
 
-use serde::{Deserialize as _, Deserializer};
+use serde_core::{Deserialize as _, Deserializer};
 
 /// Trims list of strings during deserialization.
 pub fn vec_string<'a, D: Deserializer<'a>>(de: D) -> Result<Vec<String>, D::Error> {

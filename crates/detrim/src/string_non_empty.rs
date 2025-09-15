@@ -1,6 +1,6 @@
 use alloc::{borrow::ToOwned, string::String};
 
-use serde::{de, Deserialize as _, Deserializer};
+use serde_core::{de, Deserialize as _, Deserializer};
 
 /// Trims string during deserialization, returning error if it ends up empty.
 pub fn string_non_empty<'a, D: Deserializer<'a>>(de: D) -> Result<String, D::Error> {

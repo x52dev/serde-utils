@@ -2,7 +2,7 @@ use std::{
     borrow::ToOwned as _, collections::HashSet, iter::FromIterator as _, string::String, vec::Vec,
 };
 
-use serde::{Deserialize as _, Deserializer};
+use serde_core::{Deserialize as _, Deserializer};
 
 /// Trims set of strings during deserialization.
 ///

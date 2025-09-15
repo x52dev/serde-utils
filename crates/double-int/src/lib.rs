@@ -36,7 +36,7 @@
 #![deny(rust_2018_idioms, nonstandard_style, future_incompatible)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde_core::{de, Deserialize, Deserializer, Serialize, Serializer};
 
 /// Type that only deserializes from the `true` boolean value.
 ///
@@ -149,13 +149,13 @@ impl<'de> Deserialize<'de> for DoubleInt {
         match i64::deserialize(deserializer) {
             Err(err) => Err(err),
 
-            Ok(val) if (val as i128) < DoubleInt::MIN => Err(serde::de::Error::invalid_value(
-                serde::de::Unexpected::Signed(val),
+            Ok(val) if (val as i128) < DoubleInt::MIN => Err(de::Error::invalid_value(
+                de::Unexpected::Signed(val),
                 &"integer larger than -9007199254740991 / -(2^53) + 1",
             )),
 
-            Ok(val) if (val as i128) > DoubleInt::MAX => Err(serde::de::Error::invalid_value(
-                serde::de::Unexpected::Signed(val),
+            Ok(val) if (val as i128) > DoubleInt::MAX => Err(de::Error::invalid_value(
+                de::Unexpected::Signed(val),
                 &"integer smaller than 9007199254740991 / (2^53) - 1",
             )),
 

@@ -4,6 +4,8 @@
 //! * `#[serde(with = "serde_with::rust::double_option")]`
 //! * `#[serde(with = "rust_decimal::serde::float")]`
 
+use serde_core::{Deserializer, Serializer};
+
 /// Double-option float-form decimal deserializer.
 ///
 /// See [module docs](self) for more.
@@ -11,7 +13,7 @@ pub fn deserialize<'de, D>(
     deserializer: D,
 ) -> Result<Option<Option<rust_decimal::Decimal>>, D::Error>
 where
-    D: serde::de::Deserializer<'de>,
+    D: Deserializer<'de>,
 {
     crate::nullable_float::deserialize(deserializer).map(Some)
 }
@@ -24,7 +26,7 @@ pub fn serialize<S>(
     serializer: S,
 ) -> Result<S::Ok, S::Error>
 where
-    S: serde::Serializer,
+    S: Serializer,
 {
     match value {
         None => serializer.serialize_unit(),

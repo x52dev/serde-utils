@@ -1,6 +1,6 @@
 use alloc::{borrow::ToOwned as _, string::String};
 
-use serde::{Deserialize as _, Deserializer};
+use serde_core::{Deserialize as _, Deserializer};
 
 /// Trims a string slice during deserialization.
 pub fn str<'a, 'de: 'a, D: Deserializer<'de>>(de: D) -> Result<&'a str, D::Error> {

@@ -1,12 +1,13 @@
 //! Serialization and deserialization of not required but not nullable decimals as strings.
 
-use std::fmt::{self};
+use std::fmt;
 
 use rust_decimal::Decimal;
+use serde_core::{de, Deserialize, Deserializer, Serializer};
 
 struct OptionDecimalVisitor;
 
-impl<'de> serde::de::Visitor<'de> for OptionDecimalVisitor {
+impl<'de> de::Visitor<'de> for OptionDecimalVisitor {
     type Value = Option<Decimal>;
 
     fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -15,9 +16,9 @@ impl<'de> serde::de::Visitor<'de> for OptionDecimalVisitor {
 
     fn visit_some<D>(self, d: D) -> Result<Option<Decimal>, D::Error>
     where
-        D: serde::de::Deserializer<'de>,
+        D: Deserializer<'de>,
     {
-        <Decimal as serde::Deserialize>::deserialize(d).map(Some)
+        <Decimal as Deserialize>::deserialize(d).map(Some)
     }
 }
 
@@ -26,7 +27,7 @@ impl<'de> serde::de::Visitor<'de> for OptionDecimalVisitor {
 /// See [module docs](self) for more.
 pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<rust_decimal::Decimal>, D::Error>
 where
-    D: serde::de::Deserializer<'de>,
+    D: Deserializer<'de>,
 {
     deserializer.deserialize_option(OptionDecimalVisitor)
 }
@@ -36,7 +37,7 @@ where
 /// See [module docs](self) for more.
 pub fn serialize<S>(value: &Option<rust_decimal::Decimal>, serializer: S) -> Result<S::Ok, S::Error>
 where
-    S: serde::Serializer,
+    S: Serializer,
 {
     rust_decimal::serde::str_option::serialize(value, serializer)
 }

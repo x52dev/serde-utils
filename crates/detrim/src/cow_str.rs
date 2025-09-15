@@ -6,7 +6,7 @@ use alloc::{
 };
 use core::fmt;
 
-use serde::{de, Deserializer};
+use serde_core::{de, Deserializer};
 
 /// Trims a CoW string during deserialization.
 pub fn cow_str<'a, 'de: 'a, D: Deserializer<'de>>(de: D) -> Result<Cow<'a, str>, D::Error> {

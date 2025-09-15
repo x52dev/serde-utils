@@ -3,7 +3,7 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 use secrecy::{ExposeSecret as _, SecretString};
-use serde::Serializer;
+use serde_core::Serializer;
 
 /// Enables serialization of [`secrecy::SecretString`] fields by exposing the inner string.
 ///

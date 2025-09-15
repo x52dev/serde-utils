@@ -12,14 +12,13 @@ rust-version.workspace = true
 
 [package.metadata.docs.rs]
 all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
 default = []
 
 [dependencies]
 secrecy = "0.10"
-serde = "1"
+serde_core = "1"
 
 [dev-dependencies]
 serde = { version = "1", features = ["derive"] }
