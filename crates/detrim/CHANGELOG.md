@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.6
+
 - Migrate `serde` dependency to `serde_core`.
 
 ## 0.1.5
