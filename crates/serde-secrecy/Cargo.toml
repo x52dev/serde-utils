@@ -1,6 +1,6 @@
 [package]
 name = "serde-secrecy"
-version = "0.2.4"
+version = "0.2.5"
 description = "Serde support for secrecy types"
 categories = ["encoding"]
 keywords = ["serde", "utilities", "serialization", "deserialization"]
