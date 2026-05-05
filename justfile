@@ -26,7 +26,12 @@ fmt:
 
 [private]
 downgrade-for-msrv:
-    # no downgrades currently necessary
+    cargo {{ toolchain }} update -p=toml --precise=1.0.7+spec-1.1.0 # next ver: v1.85
+    cargo {{ toolchain }} update -p=toml_writer --precise=1.0.7+spec-1.1.0 # next ver: v1.85
+    cargo {{ toolchain }} update -p=toml_parser --precise=1.0.10+spec-1.1.0 # next ver: v1.85
+    cargo {{ toolchain }} update -p=toml_datetime@1 --precise=1.0.1+spec-1.1.0 # next ver: v1.85
+    cargo {{ toolchain }} update -p=indexmap --precise=2.11.4 # next ver: v1.82
+    cargo {{ toolchain }} update -p=serde_spanned --precise=1.0.4 # next ver: v1.85
 
 # Clippy check workspace.
 clippy:
@@ -45,9 +50,7 @@ test-msrv:
     @just toolchain={{ msrv_rustup }} test
 
 # Run workspace test suite, capturing coverage.
-test-coverage:
-    @just test-coverage-codecov {{ toolchain }}
-    @just test-coverage-lcov {{ toolchain }}
+test-coverage: test-coverage-codecov test-coverage-lcov
 
 # Run workspace test suite, capturing coverage info in Codecov format.
 test-coverage-codecov:
