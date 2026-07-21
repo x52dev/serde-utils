@@ -108,7 +108,7 @@ checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 
 [[package]]
 name = "detrim"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "serde",
  "serde_core",
@@ -117,7 +117,7 @@ dependencies = [
 
 [[package]]
 name = "double-int"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "serde",
  "serde_core",
@@ -413,7 +413,7 @@ dependencies = [
 
 [[package]]
 name = "serde-bool"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "serde",
  "serde_json",
@@ -422,7 +422,7 @@ dependencies = [
 
 [[package]]
 name = "serde-decimal"
-version = "0.2.5"
+version = "0.2.6"
 dependencies = [
  "rust_decimal",
  "rust_decimal_macros",
@@ -433,7 +433,7 @@ dependencies = [
 
 [[package]]
 name = "serde-secrecy"
-version = "0.2.5"
+version = "0.2.6"
 dependencies = [
  "secrecy",
  "serde",

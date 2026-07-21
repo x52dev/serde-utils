@@ -3,8 +3,8 @@
 <!-- prettier-ignore-start -->
 
 [![crates.io](https://img.shields.io/crates/v/serde-bool?label=latest)](https://crates.io/crates/serde-bool)
-[![Documentation](https://docs.rs/serde-bool/badge.svg?version=0.1.4)](https://docs.rs/serde-bool/0.1.4)
-[![dependency status](https://deps.rs/crate/serde-bool/0.1.4/status.svg)](https://deps.rs/crate/serde-bool/0.1.4)
+[![Documentation](https://docs.rs/serde-bool/badge.svg?version=0.1.5)](https://docs.rs/serde-bool/0.1.5)
+[![dependency status](https://deps.rs/crate/serde-bool/0.1.5/status.svg)](https://deps.rs/crate/serde-bool/0.1.5)
 ![MIT or Apache 2.0 licensed](https://img.shields.io/crates/l/serde-bool.svg)
 <br />
 [![CI](https://github.com/x52dev/serde-utils/actions/workflows/ci.yml/badge.svg)](https://github.com/x52dev/serde-utils/actions/workflows/ci.yml)
