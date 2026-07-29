@@ -23,7 +23,7 @@
             pkgs.cargo-shear
             pkgs.fd
             pkgs.just
-            pkgs.nodePackages.prettier
+            pkgs.prettier
             pkgs.taplo
           ] ++ lib.optional pkgs.stdenv.isDarwin [
             pkgs.pkgsBuildHost.libiconv
