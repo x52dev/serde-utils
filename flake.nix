@@ -11,6 +11,8 @@
 
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.x52.flakeModules.default ];
+
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { pkgs, config, inputs', system, lib, ... }: {
         formatter = pkgs.nixpkgs-fmt;
@@ -22,12 +24,15 @@
             pkgs.cargo-nextest
             pkgs.cargo-shear
             pkgs.fd
+            pkgs.jq
             pkgs.just
             pkgs.prettier
             pkgs.taplo
           ] ++ lib.optional pkgs.stdenv.isDarwin [
             pkgs.pkgsBuildHost.libiconv
           ];
+
+          shellHook = config.x52.justRust.shellHook;
         };
       };
     };
