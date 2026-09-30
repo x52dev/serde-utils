@@ -11,6 +11,7 @@
 [![codecov](https://codecov.io/gh/x52dev/detrim/branch/main/graph/badge.svg)](https://codecov.io/gh/x52dev/detrim)
 ![Version](https://img.shields.io/badge/rustc-1.70.0+-ab6000.svg)
 [![Download](https://img.shields.io/crates/d/detrim.svg)](https://crates.io/crates/detrim)
+[![Discord: Join chat](https://img.shields.io/badge/Discord-Join%20chat-5865F2?logo=discord&logoColor=white)](https://discord.gg/ny42g848zT)
 
 <!-- prettier-ignore-end -->
 
