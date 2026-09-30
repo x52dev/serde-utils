@@ -30,19 +30,12 @@ jobs:
           RUSTDOCFLAGS: -D warnings
         run: cargo doc --workspace --no-deps --all-features
 
-      - name: Add crate index
+      - name: Redirect to detrim
         run: |
-          {
-            printf '<!doctype html><html lang="en"><meta charset="utf-8"><title>Rustdoc preview</title><h1>Crate documentation</h1><ul>\n'
-
-            for index in target/doc/*/index.html; do
-              crate_dir="${index%/index.html}"
-              crate_name="${crate_dir##*/}"
-              printf '<li><a href="%s/index.html">%s</a></li>\n' "$crate_name" "$crate_name"
-            done
-
-            printf '</ul></html>\n'
-          } > target/doc/index.html
+          cat > target/doc/index.html <<'HTML'
+          <!doctype html>
+          <meta http-equiv="refresh" content="0; url=detrim/index.html">
+          HTML
 
       - name: Upload documentation
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
