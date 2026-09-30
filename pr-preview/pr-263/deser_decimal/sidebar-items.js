@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["ArbitraryPrecision","DoubleOption","Float","NonRequired","Nullable","Str"],"type":["DoubleOptionArbitraryPrecision","DoubleOptionFloat","DoubleOptionStr","NonRequiredArbitraryPrecision","NonRequiredFloat","NonRequiredStr","NullableArbitraryPrecision","NullableFloat","NullableStr"]};
