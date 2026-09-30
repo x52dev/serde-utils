@@ -1,0 +1,24 @@
+[package]
+name = "deser-bool"
+version = "0.1.0"
+description = "Single value, true or false, boolean deserializers for deser"
+categories = ["encoding", "no-std"]
+keywords = ["deser", "utilities", "serialization", "deserialization"]
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+deser = { workspace = true }
+
+[dev-dependencies]
+deser = { workspace = true, features = ["derive"] }
+deser-json = { workspace = true }
+
+[lints]
+workspace = true
