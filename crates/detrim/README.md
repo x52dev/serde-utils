@@ -35,3 +35,16 @@ assert_eq!(form.name, "ferris");
 ```
 
 <!-- cargo-rdme end -->
+
+## Features
+
+- `serde` enables the Serde functions and is enabled by default.
+- `deser` enables field adapters in `detrim::deser`.
+- `std` enables standard-library collections and is enabled by default.
+
+Use `default-features = false` to disable Serde and `std`. The backends are independent:
+
+```toml
+[dependencies]
+detrim = { version = "0.1", default-features = false, features = ["deser"] }
+```
