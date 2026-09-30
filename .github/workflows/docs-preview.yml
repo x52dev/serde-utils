@@ -1,0 +1,85 @@
+name: Rustdoc Preview
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rustdoc-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
+
+      - name: Build documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --workspace --no-deps --all-features
+
+      - name: Add crate index
+        run: |
+          {
+            printf '<!doctype html><html lang="en"><meta charset="utf-8"><title>Rustdoc preview</title><h1>Crate documentation</h1><ul>\n'
+
+            for index in target/doc/*/index.html; do
+              crate_dir="${index%/index.html}"
+              crate_name="${crate_dir##*/}"
+              printf '<li><a href="%s/index.html">%s</a></li>\n' "$crate_name" "$crate_name"
+            done
+
+            printf '</ul></html>\n'
+          } > target/doc/index.html
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rustdoc-preview
+          path: target/doc
+          retention-days: 7
+
+  deploy:
+    needs: build
+    if: ${{ !cancelled() && github.event.pull_request.head.repo.full_name == github.repository && (github.event.action == 'closed' || needs.build.result == 'success') }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Download documentation
+        if: github.event.action != 'closed'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: rustdoc-preview
+          path: preview
+
+      - name: Deploy or remove preview
+        uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
+        with:
+          source-dir: preview
+          preview-branch: gh-pages
+          wait-for-pages-deployment: true
+          qr-code: false
+          deploy-commit-message: 'docs: update PR preview'
+          remove-commit-message: 'docs: remove PR preview'
