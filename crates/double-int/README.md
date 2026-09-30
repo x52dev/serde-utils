@@ -22,6 +22,8 @@ This crate has been designed for use with OpenAPI tooling that wish to support i
 
 ## Examples
 
+Enable the `serde` feature to use this example.
+
 ```rust
 #[derive(Debug, serde::Deserialize)]
 struct Config {
@@ -48,3 +50,15 @@ let config = toml::from_str::<Config>(r#"
 [reg_double_int]: https://spec.openapis.org/registry/format/double-int
 
 <!-- cargo-rdme end -->
+
+## Features
+
+- `serde` enables Serde traits.
+- `deser` enables Deser traits.
+
+Both features are optional and disabled by default. The integer type is available without either backend:
+
+```toml
+[dependencies]
+double-int = "0.1"
+```
