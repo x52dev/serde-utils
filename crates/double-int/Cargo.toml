@@ -13,8 +13,14 @@ rust-version.workspace = true
 [package.metadata.docs.rs]
 all-features = true
 
+[features]
+default = ["serde"]
+serde = ["dep:serde_core"]
+miniserde = ["dep:miniserde"]
+
 [dependencies]
-serde_core = { version = "1", default-features = false }
+miniserde = { workspace = true, optional = true }
+serde_core = { version = "1", default-features = false, optional = true }
 
 [dev-dependencies]
 serde = { version = "1", features = ["derive"] }

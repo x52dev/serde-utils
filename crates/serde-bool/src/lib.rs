@@ -1,11 +1,17 @@
 //! Single value, true or false, boolean deserializers.
 //!
+//! The `serde` feature is enabled by default. Enable `miniserde` to use [`True`]
+//! and [`False`] in miniserde models. Disable default features for a miniserde-only build.
+//! Miniserde requires allocation, including when this crate is used without `std`.
+//!
 //! # Examples
 //!
 //! Supporting serde untagged enums where only one boolean value is valid, allowing fallthrough to
 //! the next variant. Avoids need to wrap all fields in `Option<_>` just in case feature is disabled.
 //!
 //! ```
+//! # #[cfg(feature = "serde")]
+//! # {
 //! #[derive(Debug, serde::Deserialize)]
 //! struct Config {
 //!     feature: FeatureConfig,
@@ -56,18 +62,25 @@
 //!     secret = "bar"
 //! "#).unwrap();
 //! assert!(matches!(config.feature, FeatureConfig::Disabled { .. }));
+//! # }
 //! ```
 
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
+#[cfg(feature = "miniserde")]
+mod miniserde_impl;
 
 /// Type that only deserializes from the `true` boolean value.
 ///
 /// # Examples
 ///
 /// ```
+/// # #[cfg(feature = "serde")]
+/// # {
 /// assert_eq!(
 ///     serde_json::from_str::<serde_bool::True>("true").unwrap().as_bool(),
 ///     true,
@@ -75,6 +88,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 ///
 /// serde_json::from_str::<serde_bool::True>("false").unwrap_err();
 /// serde_json::from_str::<serde_bool::True>("42").unwrap_err();
+/// # }
 /// ```
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct True;
@@ -110,6 +124,7 @@ impl PartialEq<True> for bool {
     }
 }
 
+#[cfg(feature = "serde")]
 impl<'de> Deserialize<'de> for True {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         if bool::deserialize(deserializer)? {
@@ -123,6 +138,7 @@ impl<'de> Deserialize<'de> for True {
     }
 }
 
+#[cfg(feature = "serde")]
 impl Serialize for True {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         serializer.serialize_bool(true)
@@ -134,6 +150,8 @@ impl Serialize for True {
 /// # Examples
 ///
 /// ```
+/// # #[cfg(feature = "serde")]
+/// # {
 /// assert_eq!(
 ///     serde_json::from_str::<serde_bool::False>("false").unwrap().as_bool(),
 ///     false,
@@ -141,6 +159,7 @@ impl Serialize for True {
 ///
 /// serde_json::from_str::<serde_bool::False>("true").unwrap_err();
 /// serde_json::from_str::<serde_bool::False>("42").unwrap_err();
+/// # }
 /// ```
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct False;
@@ -176,6 +195,7 @@ impl PartialEq<False> for bool {
     }
 }
 
+#[cfg(feature = "serde")]
 impl<'de> Deserialize<'de> for False {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         if bool::deserialize(deserializer)? {
@@ -189,13 +209,14 @@ impl<'de> Deserialize<'de> for False {
     }
 }
 
+#[cfg(feature = "serde")]
 impl Serialize for False {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         serializer.serialize_bool(false)
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "serde"))]
 mod tests {
     use super::*;
 

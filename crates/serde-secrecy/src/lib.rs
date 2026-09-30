@@ -1,8 +1,17 @@
 //! Serde support for [`secrecy`] types.
+//!
+//! The `serde` feature enables the field adapter and is enabled by default.
+//! Enable `miniserde` to use the wrapper in the `miniserde` module.
+//! Disable default features for a miniserde-only build.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
+#[cfg(feature = "miniserde")]
+pub mod miniserde;
+
+#[cfg(feature = "serde")]
 use secrecy::{ExposeSecret as _, SecretString};
+#[cfg(feature = "serde")]
 use serde_core::Serializer;
 
 /// Enables serialization of [`secrecy::SecretString`] fields by exposing the inner string.
@@ -25,6 +34,7 @@ use serde_core::Serializer;
 /// let json = serde_json::to_string(&req).unwrap();
 /// assert!(json.contains("hunter2"));
 /// ```
+#[cfg(feature = "serde")]
 pub fn expose_secret_string<S: Serializer>(
     secret: &SecretString,
     ser: S,
@@ -32,7 +42,7 @@ pub fn expose_secret_string<S: Serializer>(
     ser.serialize_str(secret.expose_secret())
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "serde"))]
 mod tests {
     use serde::Serialize;
 
