@@ -12,6 +12,7 @@ For Deser support without Serde:
 [dependencies]
 deser-bool = "0.1"
 deser-decimal = "0.1"
+deser-secrecy = "0.1"
 detrim = { version = "0.1", default-features = false, features = ["std", "deser"] }
 double-int = { version = "0.1", features = ["deser"] }
 ```
@@ -23,6 +24,7 @@ double-int = { version = "0.1", features = ["deser"] }
 | `serde-decimal` | Serde                    | Decimal field modules                |
 | `deser-decimal` | Deser                    | Decimal field adapters               |
 | `serde-secrecy` | Serde                    | Explicit secret exposure             |
+| `deser-secrecy` | Deser                    | Explicit secret exposure             |
 | `detrim`        | Optional Serde and Deser | String and collection trimming       |
 | `double-int`    | Optional Serde and Deser | Integers within the double-int range |
 

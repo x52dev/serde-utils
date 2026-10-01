@@ -220,6 +220,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "deser-secrecy"
+version = "0.1.0"
+dependencies = [
+ "deser",
+ "deser-json",
+ "secrecy",
+]
+
+[[package]]
 name = "detrim"
 version = "0.1.7"
 dependencies = [
