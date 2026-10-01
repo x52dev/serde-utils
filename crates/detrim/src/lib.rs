@@ -1,8 +1,15 @@
 //! **De**serialization **trim**ming for strings in serde models.
 //!
+//! The `serde` feature enables the field adapters and is enabled by default.
+//! Enable `miniserde` to use the wrappers in the `miniserde` module.
+//! Disable default features for a miniserde-only build. Both backends support
+//! `no_std` with allocation; set wrappers require `std`.
+//!
 //! # Examples
 //!
 //! ```
+//! # #[cfg(feature = "serde")]
+//! # {
 //! #[derive(Debug, serde::Deserialize)]
 //! struct Form {
 //!     #[serde(deserialize_with = "detrim::string")]
@@ -14,22 +21,32 @@
 //!
 //! let form = serde_json::from_str::<Form>(r#"{ "name": "  ferris   " }"#).unwrap();
 //! assert_eq!(form.name, "ferris");
+//! # }
 //! ```
 
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
+#[cfg(any(feature = "serde", feature = "miniserde"))]
 extern crate alloc;
 
+#[cfg(feature = "miniserde")]
+pub mod miniserde;
+
+#[cfg(feature = "serde")]
 mod cow_str;
-#[cfg(feature = "std")]
+#[cfg(all(feature = "serde", feature = "std"))]
 mod hashset_string;
+#[cfg(feature = "serde")]
 mod string;
+#[cfg(feature = "serde")]
 mod string_non_empty;
+#[cfg(feature = "serde")]
 mod vec_string;
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "serde", feature = "std"))]
 pub use crate::hashset_string::hashset_string;
+#[cfg(feature = "serde")]
 pub use crate::{
     cow_str::cow_str,
     string::{option_string, str, string},

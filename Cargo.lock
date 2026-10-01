@@ -110,6 +110,7 @@ checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 name = "detrim"
 version = "0.1.7"
 dependencies = [
+ "miniserde",
  "serde",
  "serde_core",
  "serde_json",
@@ -119,6 +120,7 @@ dependencies = [
 name = "double-int"
 version = "0.1.2"
 dependencies = [
+ "miniserde",
  "serde",
  "serde_core",
  "serde_json",
@@ -206,6 +208,28 @@ name = "memchr"
 version = "2.7.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
+
+[[package]]
+name = "mini-internal"
+version = "0.1.46"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "34dea53b00d87f21b1535cbef93765c75f159dbbfeef16152f0b6b3bf28f3bb6"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 3.0.6",
+]
+
+[[package]]
+name = "miniserde"
+version = "0.1.46"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8f82621301d3b99a1542736de96e5df69865b235987d6470b28c7aa670cfeb1"
+dependencies = [
+ "itoa",
+ "mini-internal",
+ "zmij",
+]
 
 [[package]]
 name = "num-traits"
@@ -415,6 +439,7 @@ dependencies = [
 name = "serde-bool"
 version = "0.1.5"
 dependencies = [
+ "miniserde",
  "serde",
  "serde_json",
  "toml",
@@ -424,6 +449,7 @@ dependencies = [
 name = "serde-decimal"
 version = "0.2.6"
 dependencies = [
+ "miniserde",
  "rust_decimal",
  "rust_decimal_macros",
  "serde",
@@ -435,6 +461,7 @@ dependencies = [
 name = "serde-secrecy"
 version = "0.2.6"
 dependencies = [
+ "miniserde",
  "secrecy",
  "serde",
  "serde_core",
@@ -505,6 +532,17 @@ name = "syn"
 version = "2.0.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ede7c438028d4436d71104916910f5bb611972c5cfd7f89b8300a8186e6fada6"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "unicode-ident",
+]
+
+[[package]]
+name = "syn"
+version = "3.0.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8593e8e72159ed2257d083c7a454a85cbf854f37a0966d8d483aff8c8a3ebcee"
 dependencies = [
  "proc-macro2",
  "quote",

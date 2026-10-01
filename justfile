@@ -38,6 +38,10 @@ clippy:
 test:
     cargo {{ toolchain }} nextest run
     cargo {{ toolchain }} test --doc
+    cargo {{ toolchain }} nextest run --workspace --all-features
+    cargo {{ toolchain }} test --workspace --doc --all-features
+    cargo {{ toolchain }} nextest run --workspace --no-default-features --features miniserde
+    cargo {{ toolchain }} test --workspace --doc --no-default-features --features miniserde
     RUSTDOCFLAGS="-D warnings" cargo {{ toolchain }} doc --workspace --no-deps --all-features
 
 # Run workspace test suite using MSRV.

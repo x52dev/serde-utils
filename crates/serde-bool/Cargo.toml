@@ -14,8 +14,14 @@ rust-version.workspace = true
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
+[features]
+default = ["serde"]
+serde = ["dep:serde"]
+miniserde = ["dep:miniserde"]
+
 [dependencies]
-serde = { version = "1", default-features = false }
+miniserde = { workspace = true, optional = true }
+serde = { version = "1", default-features = false, optional = true }
 
 [dev-dependencies]
 serde = { version = "1", features = ["derive"] }

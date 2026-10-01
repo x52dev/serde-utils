@@ -1,12 +1,18 @@
 //! The double-int format represents an integer that can be stored in an IEEE 754 double-precision
 //! number without loss of precision.
 //!
+//! The `serde` feature is enabled by default. Enable `miniserde` to use [`DoubleInt`]
+//! in miniserde models. Disable default features for a miniserde-only build.
+//! Miniserde requires allocation, including when this crate is used without `std`.
+//!
 //! This crate has been designed for use with OpenAPI tooling that wish to support integer-based
 //! `format: double-int` fields. [See docs in the OpenAPI format registry.][reg_double_int]
 //!
 //! # Examples
 //!
 //! ```
+//! # #[cfg(feature = "serde")]
+//! # {
 //! # use double_int::DoubleInt;
 //! #[derive(Debug, serde::Deserialize)]
 //! struct Config {
@@ -28,6 +34,7 @@
 //! let config = toml::from_str::<Config>(r#"
 //!     count = 36028797018963968
 //! "#).unwrap_err();
+//! # }
 //! ```
 //!
 //! [reg_double_int]: https://spec.openapis.org/registry/format/double-int
@@ -36,13 +43,19 @@
 #![deny(rust_2018_idioms, nonstandard_style, future_incompatible)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
+#[cfg(feature = "serde")]
 use serde_core::{de, Deserialize, Deserializer, Serialize, Serializer};
+
+#[cfg(feature = "miniserde")]
+mod miniserde_impl;
 
 /// Type that only deserializes from the `true` boolean value.
 ///
 /// # Examples
 ///
 /// ```
+/// # #[cfg(feature = "serde")]
+/// # {
 /// assert_eq!(
 ///     serde_json::from_str::<double_int::DoubleInt>("42").unwrap(),
 ///     42,
@@ -50,11 +63,13 @@ use serde_core::{de, Deserialize, Deserializer, Serialize, Serializer};
 ///
 /// serde_json::from_str::<double_int::DoubleInt>("4.2").unwrap_err();
 /// serde_json::from_str::<double_int::DoubleInt>("36028797018963968").unwrap_err();
+/// # }
 /// ```
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct DoubleInt(i64);
 
 impl DoubleInt {
+    #[cfg(any(feature = "serde", feature = "miniserde"))]
     const MIN: i128 = -(2_i128.pow(53)) + 1;
     const MAX: i128 = 2_i128.pow(53) - 1;
     const UMAX: u128 = 2_u128.pow(53) - 1;
@@ -144,6 +159,7 @@ impl PartialEq<i128> for DoubleInt {
     }
 }
 
+#[cfg(feature = "serde")]
 impl<'de> Deserialize<'de> for DoubleInt {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         match i64::deserialize(deserializer) {
@@ -164,6 +180,7 @@ impl<'de> Deserialize<'de> for DoubleInt {
     }
 }
 
+#[cfg(feature = "serde")]
 impl Serialize for DoubleInt {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         serializer.serialize_i64(self.0)

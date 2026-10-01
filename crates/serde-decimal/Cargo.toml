@@ -14,12 +14,15 @@ rust-version.workspace = true
 all-features = true
 
 [features]
-default = []
-rust-decimal-arbitrary-precision = ["rust_decimal/serde-with-arbitrary-precision"]
+default = ["serde"]
+serde = ["dep:serde_core", "rust_decimal/serde-with-float", "rust_decimal/serde-with-str"]
+miniserde = ["dep:miniserde"]
+rust-decimal-arbitrary-precision = ["serde", "rust_decimal/serde-with-arbitrary-precision"]
 
 [dependencies]
-rust_decimal = { version = "1.33", features = ["serde-with-float", "serde-with-str"] }
-serde_core = "1"
+miniserde = { workspace = true, optional = true }
+rust_decimal = { version = "1.33", default-features = false, features = ["std"] }
+serde_core = { version = "1", optional = true }
 
 [dev-dependencies]
 rust_decimal_macros = "1.33"

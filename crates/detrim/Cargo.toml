@@ -14,11 +14,14 @@ rust-version.workspace = true
 all-features = true
 
 [features]
-default = ["std"]
-std = []
+default = ["std", "serde"]
+std = ["miniserde?/std"]
+serde = ["dep:serde_core"]
+miniserde = ["dep:miniserde"]
 
 [dependencies]
-serde_core = { version = "1", default-features = false, features = ["alloc"] }
+miniserde = { workspace = true, optional = true }
+serde_core = { version = "1", default-features = false, features = ["alloc"], optional = true }
 
 [dev-dependencies]
 serde = { version = "1", features = ["std", "derive"] }
