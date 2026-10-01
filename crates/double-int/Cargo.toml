@@ -13,10 +13,18 @@ rust-version.workspace = true
 [package.metadata.docs.rs]
 all-features = true
 
+[features]
+default = []
+serde = ["dep:serde_core"]
+deser = ["dep:deser"]
+
 [dependencies]
-serde_core = { version = "1", default-features = false }
+deser = { workspace = true, optional = true }
+serde_core = { version = "1", optional = true, default-features = false }
 
 [dev-dependencies]
+deser = { workspace = true, features = ["derive"] }
+deser-json = { workspace = true }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 toml = "1"

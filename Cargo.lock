@@ -216,6 +216,8 @@ dependencies = [
 name = "double-int"
 version = "0.1.2"
 dependencies = [
+ "deser",
+ "deser-json",
  "serde",
  "serde_core",
  "serde_json",
