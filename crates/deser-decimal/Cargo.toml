@@ -1,0 +1,26 @@
+[package]
+name = "deser-decimal"
+version = "0.1.0"
+description = "Careful serialization of rust_decimal types with deser"
+categories = ["encoding"]
+keywords = ["deser", "utilities", "serialization", "deserialization"]
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+deser = { workspace = true, features = ["rust_decimal"] }
+rust_decimal = { version = "1.33", default-features = false, features = ["std"] }
+
+[dev-dependencies]
+deser = { workspace = true, features = ["derive"] }
+deser-json = { workspace = true }
+rust_decimal_macros = "1.33"
+
+[lints]
+workspace = true
