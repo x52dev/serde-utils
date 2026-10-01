@@ -167,6 +167,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "deser-bool"
+version = "0.1.0"
+dependencies = [
+ "deser",
+ "deser-json",
+]
+
+[[package]]
 name = "deser-core"
 version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
