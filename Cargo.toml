@@ -10,6 +10,8 @@ edition = "2021"
 rust-version = "1.88"
 
 [workspace.dependencies]
+deser = { version = "0.9", default-features = false }
+deser-json = "0.9"
 
 [workspace.lints.rust]
 rust_2018_idioms = "deny"
