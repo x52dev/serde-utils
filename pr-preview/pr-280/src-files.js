@@ -1,2 +1,0 @@
-createSrcSidebar('[["detrim",["",[],["cow_str.rs","hashset_string.rs","lib.rs","string.rs","string_non_empty.rs","vec_string.rs"]]],["double_int",["",[],["lib.rs"]]],["serde_bool",["",[],["lib.rs"]]],["serde_decimal",["",[],["double_option_arbitrary_precision.rs","double_option_float.rs","double_option_str.rs","lib.rs","non_required_arbitrary_precision.rs","non_required_float.rs","non_required_str.rs","nullable_arbitrary_precision.rs","nullable_float.rs","nullable_str.rs"]]],["serde_secrecy",["",[],["lib.rs"]]]]');
-//{"start":19,"fragment_lengths":[112,34,34,280,37]}
