@@ -9,7 +9,7 @@
 <br />
 [![CI](https://github.com/x52dev/serde-utils/actions/workflows/ci.yml/badge.svg)](https://github.com/x52dev/serde-utils/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/x52dev/serde-bool/branch/main/graph/badge.svg)](https://codecov.io/gh/x52dev/serde-bool)
-![Version](https://img.shields.io/badge/rustc-1.65+-ab6000.svg)
+![Version](https://img.shields.io/badge/rustc-1.88+-ab6000.svg)
 [![Download](https://img.shields.io/crates/d/serde-bool.svg)](https://crates.io/crates/serde-bool)
 [![Chat on Discord](https://img.shields.io/discord/1554698838651179088?label=chat&logo=discord)](https://discord.gg/ny42g848zT)
 
