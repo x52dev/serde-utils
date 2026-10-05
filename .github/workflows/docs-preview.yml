@@ -18,16 +18,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Install Rust
+      - name: Install Rust (nightly)
         uses: actions-rust-lang/setup-rust-toolchain@ecabd13d1c56bd1345c230e542e9144811ad706f # v2.0.0
+        with:
+          toolchain: nightly
 
       - name: Build documentation
         env:
-          RUSTDOCFLAGS: -D warnings
+          RUSTDOCFLAGS: --cfg=docsrs -D warnings
         run: cargo doc --workspace --no-deps --all-features
 
       - name: Redirect to detrim
@@ -61,7 +64,8 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
           persist-credentials: false

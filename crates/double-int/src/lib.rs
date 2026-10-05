@@ -34,7 +34,7 @@
 
 #![no_std]
 #![deny(rust_2018_idioms, nonstandard_style, future_incompatible)]
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 use serde_core::{de, Deserialize, Deserializer, Serialize, Serializer};
 
