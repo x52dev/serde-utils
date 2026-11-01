@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["expose_secret_string"]};
