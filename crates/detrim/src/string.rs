@@ -13,6 +13,30 @@ pub fn string<'de, D: Deserializer<'de>>(de: D) -> Result<String, D::Error> {
 }
 
 /// Trims an optional string during deserialization.
+///
+/// A null value becomes `None`. A string that is empty after trimming becomes
+/// `Some("")`. Use [`crate::option_string_non_empty`] to return `None` for empty strings.
+///
+/// Add `#[serde(default)]` to accept a missing field as `None`.
+///
+/// # Examples
+///
+/// ```
+/// #[derive(serde::Deserialize)]
+/// struct Form {
+///     #[serde(default, deserialize_with = "detrim::option_string")]
+///     name: Option<String>,
+/// }
+///
+/// let form: Form = serde_json::from_str(r#"{}"#).unwrap();
+/// assert_eq!(form.name, None);
+///
+/// let form: Form = serde_json::from_str(r#"{"name": null}"#).unwrap();
+/// assert_eq!(form.name, None);
+///
+/// let form: Form = serde_json::from_str(r#"{"name": "   "}"#).unwrap();
+/// assert_eq!(form.name.as_deref(), Some(""));
+/// ```
 pub fn option_string<'de, D: Deserializer<'de>>(de: D) -> Result<Option<String>, D::Error> {
     let val = Option::<String>::deserialize(de)?;
     Ok(val.map(|val| val.trim().to_owned()))

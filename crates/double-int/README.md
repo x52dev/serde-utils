@@ -11,6 +11,7 @@
 [![codecov](https://codecov.io/gh/x52dev/double-int/branch/main/graph/badge.svg)](https://codecov.io/gh/x52dev/double-int)
 ![Version](https://img.shields.io/badge/rustc-1.56+-ab6000.svg)
 [![Download](https://img.shields.io/crates/d/double-int.svg)](https://crates.io/crates/double-int)
+[![Chat on Discord](https://img.shields.io/discord/1554698838651179088?label=chat&logo=discord)](https://discord.gg/ny42g848zT)
 
 <!-- prettier-ignore-end -->
 

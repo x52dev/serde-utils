@@ -18,16 +18,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
+      - name: Install Rust (nightly)
+        uses: actions-rust-lang/setup-rust-toolchain@ecabd13d1c56bd1345c230e542e9144811ad706f # v2.0.0
+        with:
+          toolchain: nightly
 
       - name: Build documentation
         env:
-          RUSTDOCFLAGS: -D warnings
+          RUSTDOCFLAGS: --cfg=docsrs -D warnings
         run: cargo doc --workspace --no-deps --all-features
 
       - name: Redirect to detrim
@@ -49,20 +52,27 @@ jobs:
     if: ${{ !cancelled() && github.event.pull_request.head.repo.full_name == github.repository && (github.event.action == 'closed' || needs.build.result == 'success') }}
     runs-on: ubuntu-latest
 
+    # Pages builds share gh-pages, so wait for each deployment before the next push.
+    concurrency:
+      group: rustdoc-preview-deploy
+      cancel-in-progress: false
+      queue: max
+
     permissions:
       actions: read
       contents: write
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
           persist-credentials: false
 
       - name: Download documentation
         if: github.event.action != 'closed'
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: rustdoc-preview
           path: preview
