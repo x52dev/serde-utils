@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["double_option_arbitrary_precision","double_option_float","double_option_str","non_required_arbitrary_precision","non_required_float","non_required_str","nullable_arbitrary_precision","nullable_float","nullable_str"]};
